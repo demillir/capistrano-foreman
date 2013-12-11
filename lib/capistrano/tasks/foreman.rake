@@ -52,10 +52,10 @@ end
 
 namespace :load do
   task :defaults do
-    set :foreman_use_sudo, true
-    set :foreman_use_binstubs, false
-    set :foreman_template, 'upstart'
-    set :foreman_export_path, '/etc/init/sites'
-    set :foreman_roles, :all
+    set :foreman_use_sudo, fetch(:foreman_use_sudo, false)
+    set :foreman_use_binstubs, fetch(:foreman_use_binstubs, false)
+    set :foreman_template, fetch(:foreman_template, 'upstart')
+    set :foreman_export_path, fetch(:foreman_export_path, '/etc/init/sites')
+    set :foreman_roles, fetch(:foreman_roles, :all)
   end
 end
