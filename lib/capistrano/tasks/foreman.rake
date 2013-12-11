@@ -3,7 +3,7 @@ namespace :foreman do
 
   desc 'Export the Procfile'
   task :export do
-    on roles foreman_roles.map(&:to_sym) do
+    on roles fetch(:foreman_roles) do
       within release_path do
         use_sudo = foreman_use_sudo ? 'sudo' : ''
         command = foreman_use_binstubs ? 'bin/foreman' : 'bundle exec foreman'
@@ -24,7 +24,7 @@ namespace :foreman do
 
   desc 'Start the application services'
   task :start do
-    on roles foreman_roles.map(&:to_sym) do
+    on roles fetch(:foreman_roles) do
       use_sudo = foreman_use_sudo ? 'sudo' : ''
       app = foreman_options[:app] || application
       execute "#{use_sudo} service #{app} start"
@@ -33,7 +33,7 @@ namespace :foreman do
 
   desc 'Stop the application services'
   task :stop do
-    on roles foreman_roles do
+    on roles fetch(:foreman_roles) do
       use_sudo = foreman_use_sudo ? 'sudo' : ''
       app = foreman_options[:app] || application
       execute "#{use_sudo} service #{app} stop"
@@ -42,7 +42,7 @@ namespace :foreman do
 
   desc 'Restart the application services'
   task :restart do
-    on roles foreman_roles.map(&:to_sym) do
+    on roles fetch(:foreman_roles) do
       use_sudo = foreman_use_sudo ? 'sudo' : ''
       app = foreman_options[:app] || application
       execute "#{use_sudo} service #{app} restart"
@@ -56,7 +56,7 @@ namespace :load do
     set :foreman_use_sudo, true
     set :foreman_use_binstubs, false
     set :foreman_template, 'upstart'
-    set :foreman_roles, %w{app}
     set :foreman_export_path, '/etc/init/sites'
+    set :foreman_roles, [:app]
   end
 end
