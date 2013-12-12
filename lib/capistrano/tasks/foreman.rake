@@ -25,7 +25,8 @@ namespace :foreman do
   task :start do
     on roles fetch(:foreman_roles) do
       use_sudo = fetch(:foreman_use_sudo, false) ? 'sudo' : ''
-      app = foreman_options[:app] || fetch(:application)
+      options = fetch(:foreman_options)
+      app = options[:app] || fetch(:application)
       execute "#{use_sudo} service #{app} start"
     end
   end
@@ -34,7 +35,8 @@ namespace :foreman do
   task :stop do
     on roles fetch(:foreman_roles) do
       use_sudo = fetch(:foreman_use_sudo, false) ? 'sudo' : ''
-      app = foreman_options[:app] || fetch(:application)
+      options = fetch(:foreman_options)
+      app = options[:app] || fetch(:application)
       execute "#{use_sudo} service #{app} stop"
     end
   end
@@ -43,7 +45,8 @@ namespace :foreman do
   task :restart do
     on roles fetch(:foreman_roles) do
       use_sudo = fetch(:foreman_use_sudo, false) ? 'sudo' : ''
-      app = foreman_options[:app] || fetch(:application)
+      options = fetch(:foreman_options)
+      app = options[:app] || fetch(:application)
       execute "#{use_sudo} service #{app} restart"
     end
   end
