@@ -13,7 +13,7 @@ namespace :foreman do
           log: File.join(shared_path, 'log'),
         }.merge fetch(:foreman_options, {})
 
-        execute "#{use_sudo} #{command}",
+        execute "#{use_sudo} #{command} export",
           fetch(:foreman_template),
           fetch(:foreman_export_path),
           opts.map { |opt, value| "--#{opt}='#{value}'" }.join(' ')
