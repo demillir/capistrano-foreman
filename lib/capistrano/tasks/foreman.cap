@@ -1,19 +1,27 @@
-# coding: utf-8
 namespace :foreman do
 
   desc 'Export the Procfile'
   task :export do
     on roles fetch(:foreman_roles) do
       within release_path do
-        use_sudo = fetch(:foreman_use_sudo, false) ? 'sudo' : ''
-        command = fetch(:foreman_use_binstubs, false) ? 'bin/foreman' : 'bundle exec foreman'
+        use_sudo = fetch(:foreman_use_sudo, false) ? 'sudo ' : ''
+        if fetch(:foreman_use_binstubs, false)
+			command = 'bin/foreman'
+			args = ''
+		else 
+			command = 'bundle'
+			args = 'exec foreman'
+		end
+
+		command = use_sudo + command
+		args += ' export'
 
         opts = { 
           app: fetch(:application),
           log: File.join(shared_path, 'log'),
         }.merge fetch(:foreman_options, {})
 
-        execute "#{use_sudo} #{command} export",
+		execute command, args,
           fetch(:foreman_template),
           fetch(:foreman_export_path),
           opts.map { |opt, value| "--#{opt}='#{value}'" }.join(' ')
