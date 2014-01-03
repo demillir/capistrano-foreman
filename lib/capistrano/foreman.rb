@@ -1,2 +1,1 @@
-# coding: utf-8
-load File.expand_path('../tasks/foreman.rake', __FILE__)
+load File.expand_path('../tasks/foreman.cap', __FILE__)
