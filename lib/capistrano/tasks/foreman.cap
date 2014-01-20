@@ -13,7 +13,6 @@ namespace :foreman do
 			args = 'exec foreman'
 		end
 
-		command = use_sudo + command
 		args += ' export'
 
         opts = { 
@@ -35,7 +34,7 @@ namespace :foreman do
       use_sudo = fetch(:foreman_use_sudo, false) ? 'sudo' : ''
       options = fetch(:foreman_options)
       app = options[:app] || fetch(:application)
-      execute "#{use_sudo} service #{app} start"
+      execute "#{use_sudo} /sbin/start #{app} start"
     end
   end
 
@@ -45,7 +44,7 @@ namespace :foreman do
       use_sudo = fetch(:foreman_use_sudo, false) ? 'sudo' : ''
       options = fetch(:foreman_options)
       app = options[:app] || fetch(:application)
-      execute "#{use_sudo} service #{app} stop"
+      execute "#{use_sudo} /sbin/stop #{app}"
     end
   end
 
@@ -55,7 +54,7 @@ namespace :foreman do
       use_sudo = fetch(:foreman_use_sudo, false) ? 'sudo' : ''
       options = fetch(:foreman_options)
       app = options[:app] || fetch(:application)
-      execute "#{use_sudo} service #{app} restart"
+      execute "#{use_sudo} /sbin/restart #{app}"
     end
   end
 
