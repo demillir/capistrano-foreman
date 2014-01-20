@@ -34,7 +34,7 @@ namespace :foreman do
       use_sudo = fetch(:foreman_use_sudo, false) ? 'sudo' : ''
       options = fetch(:foreman_options)
       app = options[:app] || fetch(:application)
-      execute "#{use_sudo} /sbin/start #{app} start"
+      execute "#{use_sudo} /sbin/start #{app}"
     end
   end
 
